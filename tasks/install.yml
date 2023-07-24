@@ -1,0 +1,6 @@
+---
+- name: installing apache package
+  yum:
+   name: httpd
+   state: latest
+...

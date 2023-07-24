@@ -1,0 +1,39 @@
+---
+- name: installing and configuration of apache server playbook.
+  hosts: web
+  tasks:
+    - name: installing apache package
+      yum:
+        name: httpd
+        state: latest
+
+    - name: starting and enabling apache service.
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: configurtaion of apache web server.
+      template:
+        src: /home/shahfahad/index.j2
+        dest: /var/www/html/index.html
+
+    - name: Restarting apache web server
+      service:
+        name: httpd
+        state: restarted
+
+    - name: Adding services in the firewall.
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+
+    - name: Reloading of firewall service
+      service:
+        name: firewalld
+        state: reloaded
+...
+
+
+
